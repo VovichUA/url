@@ -5,10 +5,16 @@
  * Date: 16.11.18
  * Time: 16:15
  */
-//echo "<pre>";
-//var_dump($_POST['this']);
 
-$url = preg_split("[\n]", $_POST['this'], -1, PREG_SPLIT_OFFSET_CAPTURE);
+$url = explode(PHP_EOL, $_POST['this']);
 
-echo "<pre>";
-var_dump($url);
+foreach ($url as $value) {
+    $item = array('http' , 'https');
+    $search = array('https', 'http');
+
+    $res = str_replace($search,$item,$value);
+    echo "<pre>";
+    var_dump($res);
+}
+
+
