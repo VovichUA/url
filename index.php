@@ -1,3 +1,4 @@
+<?php //session_start() ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,9 +9,9 @@
     <title>Document</title>
 </head>
 <body>
-<form action="url.php">
+<form action="url.php" method="post">
     <textarea id="this" name="this"></textarea>
-    <button type="submit" name="this">push</button>
+    <button type="submit" name="those">push</button>
 </form>
 
 </body>
