@@ -8,7 +8,7 @@
 //echo "<pre>";
 //var_dump($_POST['this']);
 
-$url = preg_split("[\s]", $_POST['this'], -1, PREG_SPLIT_OFFSET_CAPTURE);
+$url = preg_split("[\n]", $_POST['this'], -1, PREG_SPLIT_OFFSET_CAPTURE);
 
 echo "<pre>";
 var_dump($url);
