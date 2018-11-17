@@ -38,7 +38,7 @@ foreach ($urls as $url) {
 
 foreach ($newUrl as $new) {
 
-    $ch = curl_init($ch);
+    $ch = curl_init($new);
 
     curl_exec($ch);
     if (!curl_errno($ch)) {
