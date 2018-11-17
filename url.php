@@ -40,8 +40,6 @@ foreach ($newUrl as $new) {
 
     $ch = curl_init($ch);
 
-    curl_setopt($ch, CURLOPT_URL, $new);
-
     curl_exec($ch);
     if (!curl_errno($ch)) {
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
