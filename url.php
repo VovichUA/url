@@ -31,8 +31,6 @@ foreach ($urls as $url) {
 
 foreach ($urlsForCurl as $urlForRequest) {
         $parsedParams = parse_url($urlForRequest);
-//        echo "<pre>";
-//        var_dump($parsedParams);
 
         $curlResource = curl_init($urlForRequest);
         curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, true);
@@ -44,16 +42,16 @@ foreach ($urlsForCurl as $urlForRequest) {
                     $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
                     echo $urlForRequest.'/index.php: Код ответа: '.$httpCode."<br>";
                     if ($httpCode == 301) {
-                        $modifiedUrl = str_replace($parsedParams['scheme'], 'http', $url);
-                        echo $urlForRequest.'/index.php'."<br>";
+                        $urlChange = str_replace($parsedParams['scheme'], 'https', $urlForRequest);
+                        echo 'Редирект: '.$urlChange.'/index.php'."<br>";
                     }
 
                 } else {
                     $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
                     echo $urlForRequest.': Код ответа: '.$httpCode."<br>";
                     if ($httpCode == 301) {
-                        $modifiedUrl = str_replace($parsedParams['scheme'], 'http', $url);
-                        echo $urlForRequest."<br>";
+                        $urlChange = str_replace($parsedParams['scheme'], 'http', $urlForRequest);
+                        echo 'Редирект: '.$urlChange."<br>";
                     }
                 }
             }
