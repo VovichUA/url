@@ -17,9 +17,6 @@ foreach ($urls as $url) {
     $protocol = $parsedParams['scheme'];
     if ($protocol == 'http') {
         $replaceTo = 'https';
-        if (!isset($parsedParams['path'])) {
-            $modifiedUrl .= '/index.php';
-        }
     } elseif ($protocol == 'https') {
         $replaceTo = 'http';
     } else {
@@ -27,24 +24,41 @@ foreach ($urls as $url) {
         continue;
     }
 
-
-
     $modifiedUrl = str_replace($protocol, $replaceTo, $url);
 
-    $newUrl[] = $modifiedUrl;
+    $urlsForCurl[] = $modifiedUrl;
 }
-//echo "<pre>";
-//var_dump($newUrl);
 
-foreach ($newUrl as $new) {
+foreach ($urlsForCurl as $urlForRequest) {
+        $parsedParams = parse_url($urlForRequest);
+//        echo "<pre>";
+//        var_dump($parsedParams);
 
-    $ch = curl_init($new);
+        $curlResource = curl_init($urlForRequest);
+        curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, true);
 
-    curl_exec($ch);
-    if (!curl_errno($ch)) {
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        echo 'Код ответа: '.$httpCode."<br><br>";
+        curl_exec($curlResource);
 
-    }
-    curl_close($ch);
+            if (!curl_errno($curlResource)) {
+                if (!isset($parsedParams['path'])) {
+                    $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
+                    echo $urlForRequest.'/index.php: Код ответа: '.$httpCode."<br>";
+                    if ($httpCode == 301) {
+                        $modifiedUrl = str_replace($parsedParams['scheme'], 'http', $url);
+                        echo $urlForRequest.'/index.php'."<br>";
+                    }
+
+                } else {
+                    $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
+                    echo $urlForRequest.': Код ответа: '.$httpCode."<br>";
+                    if ($httpCode == 301) {
+                        $modifiedUrl = str_replace($parsedParams['scheme'], 'http', $url);
+                        echo $urlForRequest."<br>";
+                    }
+                }
+            }
+
+    curl_close($curlResource);
+
 }
+
