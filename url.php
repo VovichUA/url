@@ -40,18 +40,22 @@ foreach ($urlsForCurl as $urlForRequest) {
             if (!curl_errno($curlResource)) {
                 if (!isset($parsedParams['path'])) {
                     $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
-                    echo $urlForRequest.'/index.php: Код ответа: '.$httpCode."<br>";
-                    if ($httpCode == 301) {
+                    echo $urlForRequest.'/index.php: Код ответа: '.$httpCode;
+                    if ($httpCode == 301 || $httpCode == 302) {
                         $urlChange = str_replace($parsedParams['scheme'], 'https', $urlForRequest);
-                        echo 'Редирект: '.$urlChange.'/index.php'."<br>";
+                        echo "<br>".'Редирект: '.$urlChange.'/index.php'."<hr>";
+                    } else {
+                        echo "<hr>";
                     }
 
                 } else {
                     $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
-                    echo $urlForRequest.': Код ответа: '.$httpCode."<br>";
-                    if ($httpCode == 301) {
+                    echo $urlForRequest.': Код ответа: '.$httpCode;
+                    if ($httpCode == 301 || $httpCode == 302) {
                         $urlChange = str_replace($parsedParams['scheme'], 'https    ', $urlForRequest);
-                        echo 'Редирект: '.$urlChange."<br>";
+                        echo "<br>".'Редирект: '.$urlChange."<hr>";
+                    } else {
+                        echo "<hr>";
                     }
                 }
             }
