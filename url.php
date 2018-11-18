@@ -50,7 +50,7 @@ foreach ($urlsForCurl as $urlForRequest) {
                     $httpCode = curl_getinfo($curlResource, CURLINFO_HTTP_CODE);
                     echo $urlForRequest.': Код ответа: '.$httpCode."<br>";
                     if ($httpCode == 301) {
-                        $urlChange = str_replace($parsedParams['scheme'], 'http', $urlForRequest);
+                        $urlChange = str_replace($parsedParams['scheme'], 'https    ', $urlForRequest);
                         echo 'Редирект: '.$urlChange."<br>";
                     }
                 }
